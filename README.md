@@ -18,7 +18,6 @@ A Minecraft Server Ping Plugin For KookBC.
 </p>
 ​
 这个插件最初的版本来自于 ZX夏夜之风(SNWCreations)
-
 <p>
   <a href="https://github.com/SNWCreations">
     <img src="https://img.shields.io/badge/Author-SNWCreations-blue.svg?link=https://github.com/SNWCreations" />
@@ -32,6 +31,13 @@ A Minecraft Server Ping Plugin For KookBC.
 ​<p>
     <a href="https://github.com/looly/hutool-site">
         <img src="https://img.shields.io/badge/-HuTool-red">
+    </a>
+</p>
+
+使用到的Ping库
+​<p>
+    <a href="https://github.com/lucaazalim/minecraft-server-ping">
+        <img src="https://img.shields.io/badge/MCServerPing-lucaazalim-red">
     </a>
 </p>
 
