@@ -50,3 +50,6 @@ A Minecraft Server Ping Plugin For KookBC.
     </a>
 </p>
 
+## 用法
+
+首先你得有一个<a href= "https://github.com/SNWCreations/KookBC"><img src="https://img.shields.io/badge/-KookBC-red"></a>客户端，按照KookBC的Readme.md中的食用说明将机器人运行起来，然后在本仓库的Releases里下载本插件，或者你可以自己把项目下载下来导入到IDE里(推荐IDEA)然后自己构建出来，然后放到plugins文件夹里重启Kookbc，这样你就拥有一个自己的McServerPing bot了
