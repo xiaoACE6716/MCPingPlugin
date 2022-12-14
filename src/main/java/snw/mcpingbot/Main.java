@@ -23,6 +23,7 @@ import snw.jkook.message.component.card.module.HeaderModule;
 import snw.jkook.message.component.card.module.SectionModule;
 import snw.jkook.plugin.BasePlugin;
 import snw.mcpingbot.codec.StringToBase64;
+import snw.mcpingbot.utils.GetLocale;
 
 import java.io.File;
 import java.io.IOException;
@@ -73,73 +74,100 @@ public class Main extends BasePlugin {
                                 try {
                                     response = MCPing.getPing(MCPingOptions.builder().hostname(host).port(port).build());
                                 } catch (IOException e) {
-                                    getLogger().error("Unable to PING requested host {}", address, e);
+                                    //getLogger().error("Unable to PING requested host {}", address, e);
+                                    getLogger().error("Unable to PING requested host {}",address);
+                                    getLogger().debug("Unable to PING requested host {}", address, e);
                                     reply(sender, message, "尝试 PING 服务器时发生异常，这个服务器可能不在线？或者连接超时？");
-                                    return;
+                                    return ;
                                 }
 
                                 // endregion
                                 // information
-                                String motd = response.getDescription().getStrippedText().replace("\\\\", "\\");
-                                int online = response.getPlayers().getOnline();
-                                int max = response.getPlayers().getMax();
-                                String mcVer = response.getVersion().getName();
-                                Long ping = response.getPing();
-                                int protocol = response.getVersion().getProtocol();
 
-                                //File file = Base64.decodeBase64String(response.getFavicon());
-                                File file = StringToBase64.base64StringToFile(response.getFavicon());
+                                String motd = null;
+                                int online = 0 ;
+                                int max = 0;
+                                String mcVer = null;
+                                Long ping = null ;
+                                int protocol = 0;
+                                File file = null;
+                                StringBuilder players = new StringBuilder();
+                                //机器人所在地区
+                                String botRegion = GetLocale.getRegion();
 
-                                //玩家列表
-                                String players = "";
-                                List<MCPingResponse.Player> playerList = response.getPlayers().getSample();
+                                if (response != null) {
+                                     motd = response.getDescription().getStrippedText().replace("\\\\", "\\");
+                                     online = response.getPlayers().getOnline();
+                                    max = response.getPlayers().getMax();
+                                    mcVer = response.getVersion().getName();
+                                    ping = response.getPing();
+                                    protocol = response.getVersion().getProtocol();
 
-                                for (int i=0;i < playerList.size() ;i++){
-                                    players += playerList.get(i).getName() + " ";
+                                    //Server Icon
+                                    if (response.getFavicon() != null) {
+                                        file = StringToBase64.base64StringToFile(response.getFavicon());
+                                    }
+
+                                    //玩家列表
+
+
+                                    if (response.getPlayers().getSample() != null) {
+                                        List<MCPingResponse.Player> playerList = response.getPlayers().getSample();
+                                        for (MCPingResponse.Player player : playerList) {
+                                            players.append(player.getName()).append(" ");
+                                        }
+                                    }
+
                                 }
 
-                                // build card
-                                MultipleCardComponent card = new CardBuilder()
-                                        .setTheme(Theme.NONE)
-                                        .setSize(Size.LG)
-                                        .addModule(
-                                                new HeaderModule(new PlainTextElement(String.format("来自 %s 的回应", address), false))
-                                        )
-                                        .addModule(
-                                                new SectionModule(
-                                                        new MarkdownElement(motd),
-                                                        file != null ? new ImageElement(
-                                                                JKook.getHttpAPI().uploadFile(file),
-                                                                null,
-                                                                Size.SM,
-                                                                false
-                                                        ) : null,
-                                                        file != null ? Accessory.Mode.RIGHT : null
-                                                )
-                                        )
-                                        .addModule(
-                                                new ContextModule.Builder()
-                                                        .add(new PlainTextElement(String.format("在线: %s, 最大可容纳: %s,延迟: %s ms", online, max,ping), false))
-                                                        .build()
-                                        )
-                                        .addModule(
-                                                new ContextModule.Builder()
-                                                        .add(new PlainTextElement(String.format("Minecraft 版本: %s, 协议号: %s", mcVer, protocol), false))
-                                                        .build()
-                                        )
-                                        .addModule(
-                                                new HeaderModule(new PlainTextElement("玩家列表：",false))
-                                        )
-                                        .addModule(
-                                                new SectionModule(
-                                                        new PlainTextElement(players,false),
-                                                        null,null
-                                                )
-                                        )
+                                    // build card
+                                    MultipleCardComponent card = new CardBuilder()
+                                            .setTheme(Theme.NONE)
+                                            .setSize(Size.LG)
+                                            .addModule(
+                                                    new HeaderModule(new PlainTextElement(String.format("来自 %s 的回应", address), false))
+                                            )
+                                            .addModule(
+                                                    new SectionModule(
+                                                            new MarkdownElement(motd),
+                                                            file != null ? new ImageElement(
+                                                                    JKook.getHttpAPI().uploadFile(file),
+                                                                    null,
+                                                                    Size.SM,
+                                                                    false
+                                                            ) : null,
+                                                            file != null ? Accessory.Mode.RIGHT : null
+                                                    )
+                                            )
+                                            .addModule(
+                                                    new ContextModule.Builder()
+                                                            .add(new PlainTextElement(String.format("在线: %s, 最大可容纳: %s, 延迟: %s ms", online, max, ping), false))
+                                                            .build()
+                                            )
+                                            .addModule(
+                                                    new ContextModule.Builder()
+                                                            .add(new PlainTextElement(String.format("机器人在:%s 延迟仅供参考",botRegion),false))
+                                                            .build()
+                                            )
+                                            .addModule(
+                                                    new ContextModule.Builder()
+                                                            .add(new PlainTextElement(String.format("Minecraft 版本: %s, 协议号: %s", mcVer, protocol), false))
+                                                            .build()
+                                            )
+                                            .addModule(
+                                                    new HeaderModule(new PlainTextElement("玩家列表：", false))
+                                            )
+                                            .addModule(
+                                                    new SectionModule(
+                                                            new PlainTextElement(players.toString(), false),
+                                                            null, null
+                                                    )
+                                            )
 
 
+                                            .build();
 
-                                        .build();
+
                                 reply(sender, message, card);
                                 if (file != null) {
                                     //noinspection ResultOfMethodCallIgnored
