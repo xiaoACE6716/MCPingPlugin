@@ -6,7 +6,7 @@
 
     <groupId>snw</groupId>
     <artifactId>mcpingbot</artifactId>
-    <version>1.0.8</version>
+    <version>1.0.9</version>
     <name>Minecraft Ping Bot</name>
     <description>A easy KOOK bot that can PING a Minecraft server.</description>
 
