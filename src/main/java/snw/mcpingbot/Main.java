@@ -46,6 +46,8 @@ public class Main extends BasePlugin {
             cacheDir.mkdir();
         }
 
+        GetLocale.getRegion();
+
         new JKookCommand("mcping")
                 .executesUser(
                         (sender, arguments, message) -> {
@@ -93,7 +95,7 @@ public class Main extends BasePlugin {
                                 File file = null;
                                 StringBuilder players = new StringBuilder();
                                 //机器人所在地区
-                                String botRegion = GetLocale.getRegion();
+                                String botRegion = (String) GetLocale.regionResult;
 
                                 if (response != null) {
                                      motd = response.getDescription().getStrippedText().replace("\\\\", "\\");
