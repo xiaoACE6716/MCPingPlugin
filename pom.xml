@@ -87,7 +87,7 @@
         <dependency>
             <groupId>com.github.SNWCreations</groupId>
             <artifactId>JKook</artifactId>
-            <version>0.37.3</version>
+            <version>0.37.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>

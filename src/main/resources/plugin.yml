@@ -1,5 +1,5 @@
 name: MCPingPlugin
-version: 1.0.9
-api-version: 0.37.3
+version: 1.0.10
+api-version: 0.37.4
 authors: ["SNWCreations","xiaoACE"]
 main: snw.mcpingbot.Main
