@@ -165,10 +165,7 @@ public class Main extends BasePlugin {
                                                             null, null
                                                     )
                                             )
-
-
                                             .build();
-
 
                                 reply(sender, message, card);
                                 if (file != null) {
@@ -197,10 +194,8 @@ public class Main extends BasePlugin {
 
     private void reply(User sender, Message message, String content) {
         if (message instanceof TextChannelMessage) {
-            ((TextChannelMessage) message).getChannel().sendComponent(
-                    new MarkdownComponent(content),
-                    (TextChannelMessage) message,
-                    sender
+            ((TextChannelMessage) message).replyTemp(
+                    new MarkdownComponent(content)
             );
         } else {
             sender.sendPrivateMessage(new MarkdownComponent(content));
@@ -209,10 +204,8 @@ public class Main extends BasePlugin {
 
     private void reply(User sender, Message message, BaseComponent component) {
         if (message instanceof TextChannelMessage) {
-            ((TextChannelMessage) message).getChannel().sendComponent(
-                    component,
-                    (TextChannelMessage) message,
-                    sender
+            ((TextChannelMessage) message).replyTemp(
+                    component
             );
         } else {
             sender.sendPrivateMessage(component);
