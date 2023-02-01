@@ -56,7 +56,7 @@ public class Main extends BasePlugin {
                                 reply(sender, message, "您没有提供参数！");
                             } else {
                                 // region check address
-                                String address = arguments[0];
+                                String address = arguments[0].toString();
                                 String host;
                                 int port = 25565;
                                 if (!address.contains(":")) {
@@ -175,7 +175,7 @@ public class Main extends BasePlugin {
                             }
                         }
                 ).setDescription("用法：/mcping [ip] 作用：ping指定服务器")
-                .register();
+                .register(this);
 
         new JKookCommand("mcping:about")
                 .setExecutor(
@@ -189,7 +189,7 @@ public class Main extends BasePlugin {
                         }
                     }
                 ).setDescription("输出命令信息")
-                .register();
+                .register(this);
     }
 
     private void reply(User sender, Message message, String content) {
