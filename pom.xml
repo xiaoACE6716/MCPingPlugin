@@ -6,7 +6,7 @@
 
     <groupId>snw</groupId>
     <artifactId>mcpingplugin</artifactId>
-    <version>1.0.10</version>
+    <version>1.1.1</version>
     <name>Minecraft Ping Bot</name>
     <description>A easy KOOK bot that can PING a Minecraft server.</description>
 
@@ -87,7 +87,7 @@
         <dependency>
             <groupId>com.github.SNWCreations</groupId>
             <artifactId>JKook</artifactId>
-            <version>0.37.4</version>
+            <version>0.48.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
