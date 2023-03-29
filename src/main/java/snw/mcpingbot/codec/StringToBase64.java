@@ -12,20 +12,12 @@ public class StringToBase64 {
     public static File base64StringToFile(String base64String) {
 
         int index = base64String.indexOf("base64,")+7;
-        String serverIcon = base64String.substring(index,base64String.length());
+        String serverIcon = base64String.substring(index);
 
         //创建文件
         File file;
         file = new File(Main.getInstance().getDataFolder(), randomString() + ".png");
         Base64.decodeToFile(serverIcon,file);
-
-        try {
-            //noinspection ResultOfMethodCallIgnored
-            file.createNewFile();
-        } catch (IOException e) {
-            throw new RuntimeException("无法创建文件", e);
-        }
-
         return file;
     }
 
